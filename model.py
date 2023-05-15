@@ -1,5 +1,6 @@
 
 '''Transformer network with relative positional embeddings and a learning rate scheduler.'''
+'''See https://www.tensorflow.org/text/tutorials/transformer for a detailed walkthrough.'''
 
 from datetime import datetime
 import math
@@ -310,9 +311,8 @@ def create_model(input_vocab_size=128, target_vocab_size=128):
     np.random.seed(datetime.now().microsecond)
     tf.random.set_seed(datetime.now().microsecond)
     learning_rate = CustomSchedule(d_model)
-    # optimizer = tf.keras.optimizers.Adam(learning_rate, beta_1=0.9, beta_2=0.98,
-    #                                      epsilon=1e-9)
-    optimizer = tf.keras.optimizers.Adam(learning_rate=fixed_learning_rate)
+    optimizer = tf.keras.optimizers.Adam(learning_rate, beta_1=0.9, beta_2=0.98, epsilon=1e-9)
+    # optimizer = tf.keras.optimizers.Adam(learning_rate=fixed_learning_rate)
     xformer = Transformer(num_layers=num_layers, d_model=d_model, num_heads=num_heads,
                           dff=dff, input_vocab_size=input_vocab_size, target_vocab_size=target_vocab_size,
                           dropout_rate=dropout_rate)
